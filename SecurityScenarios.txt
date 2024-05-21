@@ -1,0 +1,26 @@
+FUNCTION authenticateUser(username, password):
+  QUERY database WITH username AND password
+  IF found RETURN True
+  ELSE RETURN False
+
+
+
+Refactor
+FUNCTION authenticateUser(username, password):
+    var query = "QUERY database WITH username = ? AND password = ?" 
+    vat statement = statement(query)
+    statement.setString(1, username)
+    statement.setString(2, password)
+    var found = statement.executeQuery
+    IF found RETURN True
+    ELSE RETURN False
+
+
+================================================================================
+
+DEFINE FUNCTION generateJWT(userCredentials):
+  IF validateCredentials(userCredentials):
+    SET tokenExpiration = currentTime + 3600 // Token expires in one hour
+    RETURN encrypt(userCredentials + tokenExpiration, secretKey)
+  ELSE:
+    RETURN error
